@@ -1,2 +1,3 @@
-# smart-grama-sustainability-platform_3
-Exported from Caffeine project: Smart Grama Sustainability Platform
+## Smart Grama Sustainability Platform
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

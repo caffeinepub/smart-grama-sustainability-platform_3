@@ -1,0 +1,355 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-user-authentication-system-with-two-roles-citizen-and-admin-supporting-registration-login-and-jwt-based-session-management-with-role-based-access-control",
+      "featureTitle": "Implement user authentication system with two roles (Citizen and Admin) supporting registration, login, and JWT-based session management with role-based access control",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/LoginButton.tsx",
+        "frontend/src/components/ProfileSetupModal.tsx",
+        "frontend/src/components/ProtectedRoute.tsx",
+        "frontend/src/hooks/useUserProfile.ts",
+        "frontend/src/hooks/useUserRole.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-complaint-reporting-module-allowing-citizens-to-submit-complaints-with-name-mobile-category-garbage-street-light-drainage-others-description-photo-upload-audio-upload-auto-geo-location-capture-and-status-tracking",
+      "featureTitle": "Create Complaint Reporting Module allowing citizens to submit complaints with name, mobile, category (Garbage, Street Light, Drainage, Others), description, photo upload, audio upload, auto geo-location capture, and status tracking",
+      "files": [
+        "frontend/src/components/ComplaintCard.tsx",
+        "frontend/src/pages/ReportIssuePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-admin-complaint-management-interface-allowing-panchayat-admins-to-view-all-submissions-filter-by-category-update-status-pending-to-in-progress-to-completed-assign-worker-names-and-upload-completion-proof-photos",
+      "featureTitle": "Build admin complaint management interface allowing Panchayat admins to view all submissions, filter by category, update status (Pending to In Progress to Completed), assign worker names, and upload completion proof photos",
+      "files": [
+        "frontend/src/pages/admin/ComplaintsManagementPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-citizen-complaint-rating-system-allowing-users-to-rate-completed-work-after-admin-marks-complaint-as-completed",
+      "featureTitle": "Implement citizen complaint rating system allowing users to rate completed work after admin marks complaint as completed",
+      "files": [
+        "frontend/src/components/ComplaintCard.tsx",
+        "frontend/src/components/ComplaintRatingForm.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-tree-plantation-module-allowing-citizens-to-request-saplings-select-tree-type-neem-mango-etc-upload-planting-photo-and-geo-tag-location",
+      "featureTitle": "Create Tree Plantation Module allowing citizens to request saplings, select tree type (Neem, Mango, etc.), upload planting photo, and geo-tag location",
+      "files": [
+        "frontend/src/components/TreeRequestCard.tsx",
+        "frontend/src/pages/TreePlantationPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-admin-tree-plantation-management-allowing-admins-to-approve-requests-mark-trees-as-planted-update-survival-tracking-status-and-view-survival-rate-analytics",
+      "featureTitle": "Build admin tree plantation management allowing admins to approve requests, mark trees as planted, update survival tracking status, and view survival rate analytics",
+      "files": [
+        "frontend/src/pages/admin/TreeManagementPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-rainwater-harvesting-inkudu-gunta-module-allowing-citizens-to-request-implementation-with-house-details-and-land-photo-upload",
+      "featureTitle": "Implement Rainwater Harvesting (Inkudu Gunta) Module allowing citizens to request implementation with house details and land photo upload",
+      "files": [
+        "frontend/src/components/WaterProjectCard.tsx",
+        "frontend/src/pages/WaterHarvestingPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-admin-rainwater-harvesting-management-allowing-admins-to-assign-100-days-workers-track-completion-mark-water-capacity-and-add-groundwater-impact-analytics",
+      "featureTitle": "Create admin rainwater harvesting management allowing admins to assign 100-days workers, track completion, mark water capacity, and add groundwater impact analytics",
+      "files": [
+        "frontend/src/pages/admin/WaterProjectsManagementPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-solar-scheme-application-module-integrated-with-pradhan-mantri-surya-ghar-muft-bijli-yojana-allowing-citizens-to-upload-aadhaar-electricity-bill-house-photo-and-submit-applications",
+      "featureTitle": "Build Solar Scheme Application Module integrated with Pradhan Mantri Surya Ghar Muft Bijli Yojana, allowing citizens to upload Aadhaar, electricity bill, house photo, and submit applications",
+      "files": [
+        "frontend/src/components/SolarApplicationCard.tsx",
+        "frontend/src/pages/SolarSchemePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-admin-solar-scheme-management-allowing-admins-to-verify-documents-update-installation-status-and-track-renewable-energy-generated-with-co-reduction-estimates",
+      "featureTitle": "Implement admin solar scheme management allowing admins to verify documents, update installation status, and track renewable energy generated with CO₂ reduction estimates",
+      "files": [
+        "frontend/src/pages/admin/SolarManagementPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-comprehensive-admin-analytics-dashboard-displaying-total-complaints-completion-percentage-tree-survival-rate-solar-installations-count-rainwater-projects-count-with-bar-chart-pie-chart-monthly-activity-line-chart-map-with-markers-and-recent-activity-feed",
+      "featureTitle": "Create comprehensive Admin Analytics Dashboard displaying total complaints, completion percentage, tree survival rate, solar installations count, rainwater projects count, with bar chart, pie chart, monthly activity line chart, map with markers, and recent activity feed",
+      "files": [
+        "frontend/src/components/admin/ComplaintsBarChart.tsx",
+        "frontend/src/components/admin/MetricsCards.tsx",
+        "frontend/src/components/admin/MonthlyActivityChart.tsx",
+        "frontend/src/components/admin/RecentActivityFeed.tsx",
+        "frontend/src/components/admin/StatusPieChart.tsx",
+        "frontend/src/pages/admin/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-integrate-google-maps-displaying-complaints-as-red-markers-trees-as-green-markers-solar-homes-as-yellow-markers-with-filter-by-category-functionality-and-popup-details-on-marker-click",
+      "featureTitle": "Integrate Google Maps displaying complaints as red markers, trees as green markers, solar homes as yellow markers, with filter by category functionality and popup details on marker click",
+      "files": [
+        "frontend/src/pages/admin/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-design-government-style-ui-with-header-displaying-india-emblem-style-logo-and-village-name-navbar-with-home-report-issue-tree-water-solar-my-requests-admin-login-links-language-toggle-for-english-and-telugu-status-badges-with-color-coding-and-clean-white-saffron-and-green-theme-that-is-fully-mobile-responsive",
+      "featureTitle": "Design government-style UI with header displaying India emblem style logo and village name, navbar with Home, Report Issue, Tree, Water, Solar, My Requests, Admin Login links, language toggle for English and Telugu, status badges with color coding, and clean white, saffron, and green theme that is fully mobile responsive",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/components/LanguageToggle.tsx",
+        "frontend/src/components/Navbar.tsx",
+        "frontend/src/components/StatusBadge.tsx",
+        "frontend/src/contexts/LanguageContext.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-my-requests-page-for-citizens-showing-all-their-submitted-complaints-tree-requests-rainwater-requests-and-solar-applications-with-status-tracking",
+      "featureTitle": "Implement My Requests page for citizens showing all their submitted complaints, tree requests, rainwater requests, and solar applications with status tracking",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/MyRequestsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-government-schemes-information-page-displaying-all-india-government-schemes-with-clickable-scheme-cards-that-navigate-to-detailed-information-pages-showing-full-scheme-details",
+      "featureTitle": "Create Government Schemes Information Page displaying all India government schemes with clickable scheme cards that navigate to detailed information pages showing full scheme details",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/data/schemes.ts",
+        "frontend/src/pages/SchemeDetailPage.tsx",
+        "frontend/src/pages/SchemesPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-footer-section-with-panchayat-office-address-contact-number-government-disclaimer-and-links-to-privacy-policy-terms-of-service-and-about-smart-grama-pages",
+      "featureTitle": "Add footer section with Panchayat office address, contact number, government disclaimer, and links to Privacy Policy, Terms of Service, and About Smart Grama pages",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Footer.tsx",
+        "frontend/src/pages/AboutPage.tsx",
+        "frontend/src/pages/PrivacyPolicyPage.tsx",
+        "frontend/src/pages/TermsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-16"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

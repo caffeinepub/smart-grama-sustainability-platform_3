@@ -1,0 +1,581 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Smart Grama Sustainability Platform - Frontend Implementation",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Implement user authentication system with Internet Identity integration, role-based routing, and profile setup flow for Citizen and Admin roles",
+      "acceptanceCriteria": [
+        "Citizens can register with name, email, and password",
+        "Admin users can log in with secure credentials",
+        "JWT tokens are generated and validated on protected routes",
+        "Role-based routing prevents citizens from accessing admin pages",
+        "Password hashing is implemented for secure storage"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create login/logout button component using the authorization component's Internet Identity integration. Handle authentication state with login status feedback. On logout, clear React Query cache. Verify the authorization component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/ProfileSetupModal.tsx",
+          "operation": "create",
+          "description": "Create modal dialog for first-time user profile setup collecting name and mobile number. Show only when user is authenticated but has no profile (use getCallerUserProfile to check). Call saveCallerUserProfile to persist the profile. Prevent modal flash by checking actor availability before showing modal. Use the authorization component's profile setup pattern to avoid displaying principal IDs."
+        },
+        {
+          "path": "frontend/src/hooks/useUserProfile.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching current user profile using getCallerUserProfile. Return proper loading states that account for actor availability. Include isAuthenticated, userProfile, isLoading, and isFetched states. Use pattern from authorization component to prevent profile setup modal flash."
+        },
+        {
+          "path": "frontend/src/hooks/useUserRole.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching current user role using getCallerUserRole. Cache the role result and provide isAdmin helper. Handle guest, user, and admin roles from the authorization component."
+        },
+        {
+          "path": "frontend/src/components/ProtectedRoute.tsx",
+          "operation": "create",
+          "description": "Create route guard component that checks authentication and user role. Redirect unauthenticated users to login. For admin-only routes, verify admin role using useUserRole hook. Show access denied screen for unauthorized users. Use the authorization component's access control patterns."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap admin routes with ProtectedRoute requiring admin role. Ensure LoginButton is in the header. Add ProfileSetupModal at app root level. Handle authentication state and profile setup flow before showing main content."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Create Complaint Reporting Module with form for submitting complaints including category selection, photo/audio upload via blob-storage component, auto geo-location capture, and status display",
+      "acceptanceCriteria": [
+        "Citizens can submit complaints with all required fields",
+        "Photo and audio files are uploaded and stored",
+        "Geo-location is automatically captured and stored with latitude and longitude",
+        "Complaints display status badges (Pending, In Progress, Completed)",
+        "Each complaint is associated with the submitting user"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ReportIssuePage.tsx",
+          "operation": "create",
+          "description": "Create complaint submission page with form for name, mobile, category dropdown (Garbage, Street Light, Drainage, Others), description textarea, photo upload, optional audio upload, and auto-captured geo-location display. Use ExternalBlob.fromBytes for file uploads with upload progress tracking via withUploadProgress. Capture geolocation using browser Geolocation API and format as lat,lng string. Call submitComplaint backend method on form submission. Show success message and redirect to My Requests on completion. Verify the blob-storage component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useSubmitComplaint.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for submitting complaints. Convert File objects to ExternalBlob using fromBytes method. Pass category as enum value matching backend Category type. Handle form validation and error states. Use the blob-storage component for file handling."
+        },
+        {
+          "path": "frontend/src/components/ComplaintCard.tsx",
+          "operation": "create",
+          "description": "Create reusable complaint display card showing category, description, status badge with color coding (yellow for pending, blue for inProgress, green for completed), submission date, assigned worker if any, and location. Display uploaded photo using ExternalBlob.getDirectURL() for efficient rendering. Include rating display if completed and rated."
+        },
+        {
+          "path": "frontend/src/hooks/useGeolocation.ts",
+          "operation": "create",
+          "description": "Create custom hook for capturing browser geolocation. Return latitude, longitude, loading state, and error state. Request permission and handle location access errors gracefully. Format location as 'lat,lng' string for backend storage."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Build admin complaint management interface with list view, category filtering, status update controls, worker assignment, and completion proof upload using blob-storage component",
+      "acceptanceCriteria": [
+        "Admin dashboard displays all complaints in a list or card view",
+        "Filter functionality works for Garbage, Street Light, Drainage, and Others categories",
+        "Admin can change complaint status through a dropdown or button interface",
+        "Admin can assign worker name to complaints",
+        "Admin can upload completion proof photo",
+        "Status changes are reflected in real-time for citizens"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/ComplaintsManagementPage.tsx",
+          "operation": "create",
+          "description": "Create admin page displaying all complaints using getAllComplaints. Implement category filter dropdown. Show complaints in grid/list layout using ComplaintCard components. Add inline controls for status update (dropdown with pending/inProgress/completed), worker assignment input, and completion proof photo upload using ExternalBlob.fromBytes. Call updateComplaintStatus backend method. Wrap page content with admin role guard. Verify the blob-storage component's usage instructions before implementing file uploads."
+        },
+        {
+          "path": "frontend/src/hooks/useAllComplaints.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching all complaints using getAllComplaints. Enable only for admin users. Implement client-side filtering by category. Return filtered complaints array and filter controls."
+        },
+        {
+          "path": "frontend/src/hooks/useUpdateComplaintStatus.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for updating complaint status. Accept complaint ID, new status, and optional worker name. Call updateComplaintStatus backend method. Invalidate complaints query cache on success."
+        },
+        {
+          "path": "frontend/src/components/ComplaintStatusDropdown.tsx",
+          "operation": "create",
+          "description": "Create dropdown component for changing complaint status. Show pending, inProgress, and completed options with appropriate color indicators. Call useUpdateComplaintStatus mutation on selection."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Implement citizen complaint rating system with star rating interface appearing only for completed complaints",
+      "acceptanceCriteria": [
+        "Rating interface appears only when complaint status is Completed",
+        "Citizens can submit a rating (1-5 stars or similar scale)",
+        "Ratings are stored with the complaint record",
+        "Admin can view complaint ratings"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ComplaintRatingForm.tsx",
+          "operation": "create",
+          "description": "Create star rating component (1-5 stars) that appears only when complaint status is completed and user is the complaint author. Call addComplaintRating backend method on submission. Show rating confirmation message. Display existing rating if already submitted."
+        },
+        {
+          "path": "frontend/src/hooks/useAddComplaintRating.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for submitting complaint rating. Accept complaint ID and rating value (1-5). Call addComplaintRating backend method. Invalidate relevant complaint queries on success."
+        },
+        {
+          "path": "frontend/src/components/ComplaintCard.tsx",
+          "operation": "modify",
+          "description": "Add rating display section showing star rating if complaint is completed and has rating. Include ComplaintRatingForm for complaint owner if completed but not yet rated."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Create Tree Plantation Module with request form for sapling type selection, planting photo upload via blob-storage component, and geo-location capture",
+      "acceptanceCriteria": [
+        "Citizens can submit tree plantation requests with tree type selection",
+        "Photo upload for planting proof is functional",
+        "Geo-location is captured and stored with each tree request",
+        "Tree type dropdown includes at least Neem, Mango, and other common varieties",
+        "Requests are stored with user association"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/TreePlantationPage.tsx",
+          "operation": "create",
+          "description": "Create tree plantation request page with form for tree type selection (dropdown with Neem, Mango, Teak, Banyan, Peepal options), optional photo upload using ExternalBlob.fromBytes, and auto-captured geolocation. Call requestTree backend method on submission. Show success message and redirect to My Requests. Use the blob-storage component for photo handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useRequestTree.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for submitting tree plantation request. Convert uploaded photo File to ExternalBlob using fromBytes. Pass tree type and location string. Call requestTree backend method. Handle validation and error states."
+        },
+        {
+          "path": "frontend/src/components/TreeRequestCard.tsx",
+          "operation": "create",
+          "description": "Create card component for displaying tree requests. Show tree type, planting date, location, survival status badge, and photo if available using ExternalBlob.getDirectURL(). Include admin controls for survival status update when viewed by admin."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Build admin tree plantation management with approval controls, survival tracking updates, and survival rate analytics dashboard",
+      "acceptanceCriteria": [
+        "Admin can approve or reject tree plantation requests",
+        "Admin can mark trees as planted with date tracking",
+        "Admin can update survival status (Surviving/Dead)",
+        "Survival rate percentage is calculated and displayed",
+        "Dashboard shows total trees planted and survival rate"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/TreeManagementPage.tsx",
+          "operation": "create",
+          "description": "Create admin page displaying all tree requests using getAllTrees. Show trees in grid layout with TreeRequestCard components. Add inline toggle for survival status update. Display summary metrics showing total trees planted and survival rate percentage (surviving trees / total trees * 100). Call updateTreeStatus backend method for status updates. Wrap with admin role guard."
+        },
+        {
+          "path": "frontend/src/hooks/useAllTrees.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching all trees using getAllTrees. Calculate derived metrics: total count, surviving count, and survival rate percentage. Enable only for admin users."
+        },
+        {
+          "path": "frontend/src/hooks/useUpdateTreeStatus.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for updating tree survival status. Accept tree ID and boolean survival status. Call updateTreeStatus backend method. Invalidate trees query cache on success."
+        },
+        {
+          "path": "frontend/src/components/TreeSurvivalToggle.tsx",
+          "operation": "create",
+          "description": "Create toggle switch component for tree survival status (Surviving/Dead). Show current status with color indicator (green for surviving, red for dead). Call useUpdateTreeStatus mutation on toggle."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement Rainwater Harvesting Module with request form collecting house details and land photo upload via blob-storage component",
+      "acceptanceCriteria": [
+        "Citizens can submit rainwater harvesting requests",
+        "Form collects house details (address, owner name, etc.)",
+        "Land photo upload is functional",
+        "Requests are stored with user association"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/WaterHarvestingPage.tsx",
+          "operation": "create",
+          "description": "Create rainwater harvesting request page with form collecting house details (address, owner name, plot size) and required land photo upload using ExternalBlob.fromBytes. Call requestWaterProject backend method with landPhoto. Show success message and redirect to My Requests. Use the blob-storage component for photo upload. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useRequestWaterProject.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for submitting water project request. Convert land photo File to ExternalBlob using fromBytes. Call requestWaterProject backend method. Handle validation ensuring photo is required."
+        },
+        {
+          "path": "frontend/src/components/WaterProjectCard.tsx",
+          "operation": "create",
+          "description": "Create card component for displaying water project requests. Show submission date, assigned worker name, completion status badge (yellow pending, blue inProgress, green completed), and land photo using ExternalBlob.getDirectURL(). Include admin controls for status and worker assignment."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Create admin rainwater harvesting management with worker assignment, completion tracking, and groundwater impact analytics display",
+      "acceptanceCriteria": [
+        "Admin can assign worker name to rainwater harvesting projects",
+        "Admin can update completion status",
+        "Admin can record water capacity measurement",
+        "Groundwater impact metrics are displayed on dashboard",
+        "Total rainwater projects count is tracked"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/WaterProjectsManagementPage.tsx",
+          "operation": "create",
+          "description": "Create admin page displaying all water projects using getAllWaterProjects. Show projects in grid layout with WaterProjectCard components. Add inline controls for worker assignment (text input) and status update (dropdown). Display summary metrics showing total projects, completed count, and completion percentage. Call updateWaterProjectStatus backend method. Wrap with admin role guard."
+        },
+        {
+          "path": "frontend/src/hooks/useAllWaterProjects.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching all water projects using getAllWaterProjects. Calculate derived metrics: total count, completed count, and completion percentage. Enable only for admin users."
+        },
+        {
+          "path": "frontend/src/hooks/useUpdateWaterProjectStatus.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for updating water project. Accept project ID, optional worker name, and status. Call updateWaterProjectStatus backend method. Invalidate water projects query cache on success."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Build Solar Scheme Application Module with multi-document upload form using blob-storage component for Aadhaar, electricity bill, and house photo",
+      "acceptanceCriteria": [
+        "Citizens can upload Aadhaar document",
+        "Citizens can upload electricity bill",
+        "Citizens can upload house photo",
+        "Application submission is functional",
+        "All documents are stored securely",
+        "Applications are associated with users"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SolarSchemePage.tsx",
+          "operation": "create",
+          "description": "Create solar scheme application page with form for uploading three required documents: Aadhaar document, electricity bill, and house photo. Use ExternalBlob.fromBytes for each file upload with individual upload progress tracking via withUploadProgress. Call submitSolarApplication backend method with all three ExternalBlob parameters. Show upload progress for each document. Display success message and redirect to My Requests on completion. Use the blob-storage component for file handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useSubmitSolarApplication.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for submitting solar application. Convert all three File objects (Aadhaar, bill, house photo) to ExternalBlob using fromBytes. Call submitSolarApplication backend method. Handle validation ensuring all three documents are provided. Track upload progress for user feedback."
+        },
+        {
+          "path": "frontend/src/components/SolarApplicationCard.tsx",
+          "operation": "create",
+          "description": "Create card component for displaying solar applications. Show submission date, status badge (yellow pending, blue approved, green installed), and document preview thumbnails using ExternalBlob.getDirectURL() for each uploaded document. Include admin controls for status update and document verification."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Implement admin solar scheme management with document verification interface, installation status tracking, and renewable energy/CO₂ reduction metrics display",
+      "acceptanceCriteria": [
+        "Admin can review uploaded documents",
+        "Admin can update installation status (Pending, Approved, Installed)",
+        "Admin can record energy generation data",
+        "Dashboard shows total homes installed",
+        "CO₂ reduction estimate is calculated and displayed",
+        "Energy generation metrics are visible"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/SolarManagementPage.tsx",
+          "operation": "create",
+          "description": "Create admin page displaying all solar applications using getAllSolarApplications. Show applications in grid layout with SolarApplicationCard components. Add inline status update dropdown (pending/approved/completed). Display document previews with click-to-view full size using ExternalBlob.getDirectURL(). Show summary metrics: total applications, installed count, estimated CO₂ reduction (calculated as installed count * 1.5 tons/year), and estimated energy generation (installed count * 3000 kWh/year). Call updateSolarApplicationStatus backend method. Wrap with admin role guard."
+        },
+        {
+          "path": "frontend/src/hooks/useAllSolarApplications.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching all solar applications using getAllSolarApplications. Calculate derived metrics: total count, installed count (status = completed), estimated CO₂ reduction, and energy generation. Enable only for admin users."
+        },
+        {
+          "path": "frontend/src/hooks/useUpdateSolarStatus.ts",
+          "operation": "create",
+          "description": "Create React Query mutation hook for updating solar application status. Accept application ID and new status (pending/approved/completed). Call updateSolarApplicationStatus backend method. Invalidate solar applications query cache on success."
+        },
+        {
+          "path": "frontend/src/components/DocumentViewer.tsx",
+          "operation": "create",
+          "description": "Create document viewer modal component for viewing uploaded documents in full size. Accept ExternalBlob and display using getDirectURL(). Support image preview with zoom controls. Show document filename and download option."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Create comprehensive Admin Analytics Dashboard with key metrics cards, bar chart, pie chart, line chart, map integration, and recent activity feed",
+      "acceptanceCriteria": [
+        "Dashboard displays key metrics: total complaints, completion rate, tree survival rate, solar installations, rainwater projects",
+        "Bar chart visualizes data comparison across categories",
+        "Pie chart shows distribution of complaint categories or status",
+        "Monthly activity line chart tracks trends over time",
+        "Map displays markers for complaints, trees, and solar installations",
+        "Recent activity feed shows latest submissions and updates"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/DashboardPage.tsx",
+          "operation": "create",
+          "description": "Create main admin dashboard page displaying key metrics cards at top: total complaints, completion percentage, tree survival rate, solar installations count, rainwater projects count. Include bar chart comparing category totals, pie chart showing complaint status distribution, line chart showing monthly submission trends, embedded map component with markers, and recent activity feed showing last 10 submissions across all modules. Fetch data using getAllComplaints, getAllTrees, getAllSolarApplications, getAllWaterProjects. Use shadcn/ui Card components for layout. Wrap with admin role guard."
+        },
+        {
+          "path": "frontend/src/components/admin/MetricsCards.tsx",
+          "operation": "create",
+          "description": "Create dashboard metrics cards component displaying computed statistics from all modules. Show total complaints with completion percentage, tree survival rate with total planted, solar installations count with CO₂ reduction, rainwater projects with completion rate. Use shadcn/ui Card components with color-coded borders matching theme (saffron, green, white)."
+        },
+        {
+          "path": "frontend/src/components/admin/ComplaintsBarChart.tsx",
+          "operation": "create",
+          "description": "Create bar chart component visualizing complaint counts by category (Garbage, Street Light, Drainage, Others). Use Recharts library with BarChart component. Group complaints by category and show count for each. Apply government theme colors."
+        },
+        {
+          "path": "frontend/src/components/admin/StatusPieChart.tsx",
+          "operation": "create",
+          "description": "Create pie chart component showing distribution of complaint statuses (Pending, In Progress, Completed). Use Recharts library with PieChart component. Calculate percentage for each status. Use color coding: yellow for pending, blue for inProgress, green for completed."
+        },
+        {
+          "path": "frontend/src/components/admin/MonthlyActivityChart.tsx",
+          "operation": "create",
+          "description": "Create line chart component tracking monthly submission trends across all modules. Use Recharts library with LineChart component. Group submissions by month from createdAt timestamps. Show separate lines for complaints, trees, water projects, and solar applications. Display last 6 months of data."
+        },
+        {
+          "path": "frontend/src/components/admin/RecentActivityFeed.tsx",
+          "operation": "create",
+          "description": "Create activity feed component showing latest 10 submissions and updates across all modules. Combine and sort items by createdAt timestamp. Display item type icon, description, user name from profile, and relative timestamp. Use shadcn/ui Card with scrollable content area."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Integrate map visualization displaying color-coded markers for complaints (red), trees (green), and solar homes (yellow) with filtering and popup details",
+      "acceptanceCriteria": [
+        "Map displays all complaints with red markers at geo-tagged locations",
+        "Map displays all trees with green markers at geo-tagged locations",
+        "Map displays all solar installations with yellow markers at geo-tagged locations",
+        "Filter controls allow showing/hiding markers by category",
+        "Clicking a marker opens popup with relevant details (description, status, worker, etc.)",
+        "Map is responsive and works on mobile devices"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/MapView.tsx",
+          "operation": "create",
+          "description": "Create map component using Leaflet library displaying all geo-located items. Parse location strings (lat,lng format) into coordinates. Render markers with color-coded icons: red for complaints, green for trees, yellow for solar homes. Add filter checkboxes to toggle marker visibility by type. Implement marker popups showing item details: complaints show category, status, description; trees show type, survival status; solar shows installation status. Center map on average of all marker coordinates. Make responsive for mobile with touch controls. Reference generated marker icons at frontend/public/assets/generated/markers-set.dim_90x120.png for the three colored pin styles."
+        },
+        {
+          "path": "frontend/src/hooks/useMapData.ts",
+          "operation": "create",
+          "description": "Create hook aggregating map data from all modules. Fetch complaints, trees, solar applications using respective hooks. Transform each into MapMarker type with coordinates, color, type, and detail data. Return array of markers and filter state management. Handle location string parsing (lat,lng)."
+        },
+        {
+          "path": "frontend/src/components/MarkerPopup.tsx",
+          "operation": "create",
+          "description": "Create popup component for map markers displaying contextual information based on marker type. For complaints: show category, description, status, assigned worker. For trees: show tree type, planted date, survival status. For solar: show installation status, submission date. Use shadcn/ui Card for popup styling."
+        },
+        {
+          "path": "frontend/src/pages/admin/DashboardPage.tsx",
+          "operation": "modify",
+          "description": "Embed MapView component in dashboard layout below charts section. Allocate adequate height (min 400px) for map display."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Design government-style UI with India emblem header, comprehensive navigation, language toggle, status badges, and responsive layout using saffron, green, and white theme",
+      "acceptanceCriteria": [
+        "Header includes India emblem style logo and village name prominently displayed",
+        "Navigation menu includes all specified sections",
+        "Language toggle switches between English and Telugu text",
+        "Status badges use distinct colors (e.g., yellow for Pending, blue for In Progress, green for Completed)",
+        "Color scheme uses white, saffron (#FF9933), and green (#138808) appropriately",
+        "Layout is fully responsive with mobile-friendly navigation",
+        "Card-based layout works well on all screen sizes",
+        "Buttons are touch-friendly on mobile devices"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Header.tsx",
+          "operation": "create",
+          "description": "Create header component with India emblem style logo on left (use generated image at frontend/public/assets/generated/india-emblem.dim_200x200.png), village name 'Smart Grama' in center using large text, and LoginButton on right. Apply saffron background (#FF9933) with white text. Make responsive with logo scaling on mobile. Ensure header is sticky at top."
+        },
+        {
+          "path": "frontend/src/components/Navbar.tsx",
+          "operation": "create",
+          "description": "Create navigation bar with links: Home, Report Issue, Tree, Water, Solar, My Requests, Admin Login (shown only when not admin). Use React Router Link components. Add language toggle button switching between English and Telugu. Apply government theme styling with green (#138808) hover states. Make responsive with hamburger menu for mobile screens. Include active route highlighting."
+        },
+        {
+          "path": "frontend/src/components/StatusBadge.tsx",
+          "operation": "create",
+          "description": "Create reusable status badge component accepting status prop (pending/inProgress/completed). Apply color coding: yellow background for pending, blue for inProgress, green for completed. Use shadcn/ui Badge component with custom styling. Include status icon and text label."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add CSS custom properties for government theme colors: --saffron: #FF9933, --green: #138808, --white: #FFFFFF. Define utility classes for status colors and government styling. Ensure responsive typography scales and card layouts adapt to mobile screens."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with government colors: saffron (#FF9933), green (#138808). Configure responsive breakpoints optimized for mobile-first design. Add custom utilities for status badges and card layouts."
+        },
+        {
+          "path": "frontend/src/contexts/LanguageContext.tsx",
+          "operation": "create",
+          "description": "Create React Context for managing language state (English/Telugu). Provide translation helper function t(key) that returns appropriate text based on current language. Include translation dictionary with all UI text in both languages. Export useLanguage hook for components to access translation function and current language."
+        },
+        {
+          "path": "frontend/src/components/LanguageToggle.tsx",
+          "operation": "create",
+          "description": "Create language toggle button component in Navbar. Show current language (EN/TE) and toggle between English and Telugu. Use LanguageContext to update app-wide language state. Apply government theme styling."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wrap app with LanguageProvider. Include Header and Navbar components at root level. Apply government theme styling to main layout. Ensure Header and Navbar appear on all pages."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Implement My Requests page displaying all user submissions across all modules with status tracking and detail views",
+      "acceptanceCriteria": [
+        "Page displays all user-submitted complaints with current status",
+        "Page displays all tree plantation requests with current status",
+        "Page displays all rainwater harvesting requests with current status",
+        "Page displays all solar scheme applications with current status",
+        "Each item shows submission date, category/type, and status",
+        "Users can view details of their past submissions"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/MyRequestsPage.tsx",
+          "operation": "create",
+          "description": "Create My Requests page displaying all user submissions across modules. Use getMyComplaints, getMyTrees, getMyWaterProjects, getMySolarApplications backend methods. Group items by module type with section headers. Display each using appropriate card component (ComplaintCard, TreeRequestCard, WaterProjectCard, SolarApplicationCard). Show submission date, status badge, and category/type. Sort by most recent first. Make responsive with stacked cards on mobile. Require user authentication to access page."
+        },
+        {
+          "path": "frontend/src/hooks/useMyComplaints.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching user's complaints using getMyComplaints. Enable only when user is authenticated. Return complaints array sorted by createdAt descending."
+        },
+        {
+          "path": "frontend/src/hooks/useMyTrees.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching user's tree requests using getMyTrees. Enable only when user is authenticated. Return trees array sorted by plantedDate descending."
+        },
+        {
+          "path": "frontend/src/hooks/useMyWaterProjects.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching user's water projects using getMyWaterProjects. Enable only when user is authenticated. Return projects array sorted by createdAt descending."
+        },
+        {
+          "path": "frontend/src/hooks/useMySolarApplications.ts",
+          "operation": "create",
+          "description": "Create React Query hook for fetching user's solar applications using getMySolarApplications. Enable only when user is authenticated. Return applications array sorted by createdAt descending."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route for /my-requests path rendering MyRequestsPage. Ensure route is protected requiring user authentication."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Create Government Schemes Information Page with scheme cards and detailed information views for all major Indian government schemes",
+      "acceptanceCriteria": [
+        "Page displays grid or list of government scheme cards",
+        "Each scheme card shows scheme name and brief description",
+        "Clicking a scheme navigates to a dedicated detail page",
+        "Detail page shows comprehensive scheme information (eligibility, benefits, application process, contact details)",
+        "Scheme data is stored in backend and dynamically loaded",
+        "Include major schemes like PM Awas Yojana, PM Kisan, Ayushman Bharat, etc."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/SchemesPage.tsx",
+          "operation": "create",
+          "description": "Create government schemes listing page displaying grid of scheme cards. Show scheme name, ministry, and brief description. Make cards clickable navigating to /schemes/:schemeId detail page. Use responsive grid layout (3 columns desktop, 2 tablet, 1 mobile). Include major schemes: PM Awas Yojana, PM Kisan, Ayushman Bharat, PM Surya Ghar, MGNREGA, Swachh Bharat, Digital India. Style with government theme colors."
+        },
+        {
+          "path": "frontend/src/pages/SchemeDetailPage.tsx",
+          "operation": "create",
+          "description": "Create scheme detail page showing comprehensive information for selected scheme. Display scheme name, full description, eligibility criteria, benefits, application process, required documents, contact details, and official website link. Use URL parameter schemeId to identify scheme. Apply government theme with saffron header and organized sections. Include back button to schemes list."
+        },
+        {
+          "path": "frontend/src/data/schemes.ts",
+          "operation": "create",
+          "description": "Create static data file containing comprehensive information for all government schemes. Include scheme ID, name, ministry, description, eligibility, benefits, application process, documents required, contact details, and website for each scheme. Include at least 10 major schemes covering housing, agriculture, health, employment, and sustainability sectors."
+        },
+        {
+          "path": "frontend/src/components/SchemeCard.tsx",
+          "operation": "create",
+          "description": "Create scheme card component displaying scheme name, ministry, and summary. Make clickable navigating to detail page. Use shadcn/ui Card with government theme styling. Include scheme icon or illustration if available."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add routes for /schemes (listing page) and /schemes/:schemeId (detail page). Link both in main navigation."
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Add footer with Panchayat contact information, disclaimer, and links to Privacy Policy, Terms of Service, and About pages",
+      "acceptanceCriteria": [
+        "Footer displays on all pages",
+        "Footer includes Panchayat office address",
+        "Footer includes contact phone number",
+        "Footer includes government disclaimer text",
+        "Footer links to Privacy Policy page",
+        "Footer links to Terms of Service page",
+        "Footer links to About Smart Grama page",
+        "All linked pages have appropriate content"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "create",
+          "description": "Create footer component with three sections: contact information (Panchayat office address and phone), government disclaimer text, and links to Privacy Policy, Terms of Service, and About pages. Apply green background (#138808) with white text. Make responsive with stacked layout on mobile. Include copyright notice and last updated date."
+        },
+        {
+          "path": "frontend/src/pages/PrivacyPolicyPage.tsx",
+          "operation": "create",
+          "description": "Create Privacy Policy page with comprehensive privacy policy text for government digital services. Include sections on data collection, usage, storage, user rights, and contact information. Apply government theme styling with readable typography."
+        },
+        {
+          "path": "frontend/src/pages/TermsPage.tsx",
+          "operation": "create",
+          "description": "Create Terms of Service page with terms and conditions for using Smart Grama platform. Include sections on user responsibilities, service scope, disclaimers, and governing law. Apply government theme styling."
+        },
+        {
+          "path": "frontend/src/pages/AboutPage.tsx",
+          "operation": "create",
+          "description": "Create About Smart Grama page describing platform purpose, features, benefits for citizens and panchayat administration. Include mission statement, feature highlights, and contact information. Use hero banner image at frontend/public/assets/generated/hero-banner.dim_1200x400.png showing village with sustainable development elements. Apply government theme styling."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add Footer component at root level to appear on all pages. Add routes for /privacy, /terms, and /about pages."
+        }
+      ]
+    }
+  ]
+}

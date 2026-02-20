@@ -1,0 +1,18 @@
+{
+  "frontend/src/components/ProfileSetupModal.tsx": "Modal dialog for first-time user profile setup, collects name and mobile number, prevents modal flash by checking actor availability, fixed to use undefined instead of null for optional mobile field.",
+  "frontend/src/pages/admin/ComplaintsManagementPage.tsx": "Admin page for managing all complaints with category filtering, inline status updates, worker assignment, and completion proof upload, fixed Status type initialization.",
+  "frontend/src/pages/admin/WaterProjectsManagementPage.tsx": "Admin page for managing water projects with metrics display, worker assignment, and status updates, fixed Status type initialization.",
+  "frontend/src/pages/admin/SolarManagementPage.tsx": "Admin page for managing solar applications with CO₂ and energy metrics, document viewer dialog, and status updates, fixed Status type initialization.",
+  "frontend/src/components/admin/MetricsCards.tsx": "Dashboard metrics cards component displaying key statistics across all modules (complaints, trees, water, solar) with completion rates and survival rates.",
+  "frontend/src/components/admin/ComplaintsBarChart.tsx": "Bar chart component visualizing complaint counts by category using Recharts library.",
+  "frontend/src/components/admin/StatusPieChart.tsx": "Pie chart component showing distribution of complaint statuses (pending, in progress, completed) with color coding.",
+  "frontend/src/components/admin/MonthlyActivityChart.tsx": "Line chart component tracking monthly submission trends across all modules (complaints, trees, water, solar) for the last 6 months.",
+  "frontend/src/components/admin/RecentActivityFeed.tsx": "Activity feed component displaying the 10 most recent submissions across all modules with icons and timestamps.",
+  "frontend/src/pages/SchemesPage.tsx": "Government schemes listing page displaying grid of scheme cards with name, ministry, and description, linking to detail pages using TanStack Router's params prop for type-safe navigation.",
+  "frontend/src/pages/SchemeDetailPage.tsx": "Scheme detail page showing comprehensive information including eligibility, benefits, application process, required documents, and official website link.",
+  "frontend/src/pages/AboutPage.tsx": "About page describing Smart Grama platform mission, key features, and impact with hero banner image.",
+  "frontend/src/pages/PrivacyPolicyPage.tsx": "Privacy policy page with sections on information collection, usage, storage, sharing, user rights, and policy updates.",
+  "frontend/src/pages/TermsPage.tsx": "Terms of service page covering acceptance of terms, user responsibilities, service scope, content guidelines, liability, and governing law.",
+  "frontend/src/data/schemes.ts": "Static data file containing comprehensive information for 8 major Indian government schemes including PM Awas Yojana, PM-KISAN, Ayushman Bharat, PM Surya Ghar, MGNREGA, Swachh Bharat, Digital India, and PM Ujjwala Yojana.",
+  "frontend/src/index.css": "Global styles with OKLCH color system for light/dark modes, government theme colors (saffron and green), and utility classes for theme colors."
+}

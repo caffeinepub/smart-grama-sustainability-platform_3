@@ -1,0 +1,456 @@
+{
+  "kind": "build_request",
+  "title": "Smart Grama Sustainability Platform - Government Digital Services System",
+  "projectName": "Smart Grama",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement user authentication system with two roles (Citizen and Admin) supporting registration, login, and JWT-based session management with role-based access control",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "JWT-based login",
+          "Role-based routing",
+          "Protected admin routes",
+          "role (citizen/admin)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Citizens can register with name, email, and password",
+        "Admin users can log in with secure credentials",
+        "JWT tokens are generated and validated on protected routes",
+        "Role-based routing prevents citizens from accessing admin pages",
+        "Password hashing is implemented for secure storage"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Create Complaint Reporting Module allowing citizens to submit complaints with name, mobile, category (Garbage, Street Light, Drainage, Others), description, photo upload, audio upload, auto geo-location capture, and status tracking",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Submit complaint",
+          "Photo upload",
+          "Audio upload (optional)",
+          "Auto Geo-location",
+          "Category (Garbage, Street Light, Drainage, Others)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Citizens can submit complaints with all required fields",
+        "Photo and audio files are uploaded and stored",
+        "Geo-location is automatically captured and stored with latitude and longitude",
+        "Complaints display status badges (Pending, In Progress, Completed)",
+        "Each complaint is associated with the submitting user"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Build admin complaint management interface allowing Panchayat admins to view all submissions, filter by category, update status (Pending to In Progress to Completed), assign worker names, and upload completion proof photos",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "View all submissions",
+          "Filter by category",
+          "Update status (Pending → In Progress → Completed)",
+          "Assign workers",
+          "Upload completion proof photo"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin dashboard displays all complaints in a list or card view",
+        "Filter functionality works for Garbage, Street Light, Drainage, and Others categories",
+        "Admin can change complaint status through a dropdown or button interface",
+        "Admin can assign worker name to complaints",
+        "Admin can upload completion proof photo",
+        "Status changes are reflected in real-time for citizens"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Implement citizen complaint rating system allowing users to rate completed work after admin marks complaint as completed",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Rate completed work",
+          "Rating system after completion"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Rating interface appears only when complaint status is Completed",
+        "Citizens can submit a rating (1-5 stars or similar scale)",
+        "Ratings are stored with the complaint record",
+        "Admin can view complaint ratings"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Create Tree Plantation Module allowing citizens to request saplings, select tree type (Neem, Mango, etc.), upload planting photo, and geo-tag location",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Request sapling",
+          "Select type (Neem, Mango, etc.)",
+          "Upload planting photo",
+          "Geo-tag location"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Citizens can submit tree plantation requests with tree type selection",
+        "Photo upload for planting proof is functional",
+        "Geo-location is captured and stored with each tree request",
+        "Tree type dropdown includes at least Neem, Mango, and other common varieties",
+        "Requests are stored with user association"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Build admin tree plantation management allowing admins to approve requests, mark trees as planted, update survival tracking status, and view survival rate analytics",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Approve request",
+          "Mark as planted",
+          "Update survival tracking",
+          "Show survival rate analytics"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can approve or reject tree plantation requests",
+        "Admin can mark trees as planted with date tracking",
+        "Admin can update survival status (Surviving/Dead)",
+        "Survival rate percentage is calculated and displayed",
+        "Dashboard shows total trees planted and survival rate"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Implement Rainwater Harvesting (Inkudu Gunta) Module allowing citizens to request implementation with house details and land photo upload",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Request implementation",
+          "House details",
+          "Upload land photo"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Citizens can submit rainwater harvesting requests",
+        "Form collects house details (address, owner name, etc.)",
+        "Land photo upload is functional",
+        "Requests are stored with user association"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Create admin rainwater harvesting management allowing admins to assign 100-days workers, track completion, mark water capacity, and add groundwater impact analytics",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Assign 100-days worker",
+          "Track completion",
+          "Mark water capacity",
+          "Add groundwater impact analytics"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can assign worker name to rainwater harvesting projects",
+        "Admin can update completion status",
+        "Admin can record water capacity measurement",
+        "Groundwater impact metrics are displayed on dashboard",
+        "Total rainwater projects count is tracked"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Build Solar Scheme Application Module integrated with Pradhan Mantri Surya Ghar Muft Bijli Yojana, allowing citizens to upload Aadhaar, electricity bill, house photo, and submit applications",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Upload Aadhaar",
+          "Upload Electricity Bill",
+          "House photo",
+          "Apply button",
+          "Pradhan Mantri Surya Ghar Muft Bijli Yojana"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Citizens can upload Aadhaar document",
+        "Citizens can upload electricity bill",
+        "Citizens can upload house photo",
+        "Application submission is functional",
+        "All documents are stored securely",
+        "Applications are associated with users"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Implement admin solar scheme management allowing admins to verify documents, update installation status, and track renewable energy generated with CO₂ reduction estimates",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Verify documents",
+          "Update installation status",
+          "Track renewable energy generated",
+          "Estimated CO₂ reduction"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can review uploaded documents",
+        "Admin can update installation status (Pending, Approved, Installed)",
+        "Admin can record energy generation data",
+        "Dashboard displays total homes installed",
+        "CO₂ reduction estimate is calculated and displayed",
+        "Energy generation metrics are visible"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Create comprehensive Admin Analytics Dashboard displaying total complaints, completion percentage, tree survival rate, solar installations count, rainwater projects count, with bar chart, pie chart, monthly activity line chart, map with markers, and recent activity feed",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Total complaints",
+          "Completed %",
+          "Tree survival rate",
+          "Solar installations count",
+          "Rainwater projects count",
+          "Bar chart",
+          "Pie chart",
+          "Monthly activity line chart",
+          "Map with markers",
+          "Recent activity feed"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dashboard displays key metrics: total complaints, completion rate, tree survival rate, solar installations, rainwater projects",
+        "Bar chart visualizes data comparison across categories",
+        "Pie chart shows distribution of complaint categories or status",
+        "Monthly activity line chart tracks trends over time",
+        "Map displays markers for complaints, trees, and solar installations",
+        "Recent activity feed shows latest submissions and updates"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Integrate Google Maps displaying complaints as red markers, trees as green markers, solar homes as yellow markers, with filter by category functionality and popup details on marker click",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Show complaints as red markers",
+          "Trees as green markers",
+          "Solar homes as yellow markers",
+          "Filter by category",
+          "Popup details on click"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Map displays all complaints with red markers at geo-tagged locations",
+        "Map displays all trees with green markers at geo-tagged locations",
+        "Map displays all solar installations with yellow markers at geo-tagged locations",
+        "Filter controls allow showing/hiding markers by category",
+        "Clicking a marker opens popup with relevant details (description, status, worker, etc.)",
+        "Map is responsive and works on mobile devices"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Design government-style UI with header displaying India emblem style logo and village name, navbar with Home, Report Issue, Tree, Water, Solar, My Requests, Admin Login links, language toggle for English and Telugu, status badges with color coding, and clean white, saffron, and green theme that is fully mobile responsive",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Header with India emblem style logo",
+          "Village Name display",
+          "Navbar: Home, Report Issue, Tree, Water, Solar, My Requests, Admin Login",
+          "Language toggle (English / Telugu)",
+          "Status badges (color-coded)",
+          "Clean white + saffron + green theme",
+          "Mobile responsive"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Header includes India emblem style logo and village name prominently displayed",
+        "Navigation menu includes all specified sections",
+        "Language toggle switches between English and Telugu text",
+        "Status badges use distinct colors (e.g., yellow for Pending, blue for In Progress, green for Completed)",
+        "Color scheme uses white, saffron (#FF9933), and green (#138808) appropriately",
+        "Layout is fully responsive with mobile-friendly navigation",
+        "Card-based layout works well on all screen sizes",
+        "Buttons are touch-friendly on mobile devices"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "text": "Implement My Requests page for citizens showing all their submitted complaints, tree requests, rainwater requests, and solar applications with status tracking",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Track status",
+          "View 'My Requests'"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Page displays all user-submitted complaints with current status",
+        "Page displays all tree plantation requests with current status",
+        "Page displays all rainwater harvesting requests with current status",
+        "Page displays all solar scheme applications with current status",
+        "Each item shows submission date, category/type, and status",
+        "Users can view details of their past submissions"
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "text": "Create Government Schemes Information Page displaying all India government schemes with clickable scheme cards that navigate to detailed information pages showing full scheme details",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "add all the government schemas in india with there information when click the schema get the information about them in another page"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Page displays grid or list of government scheme cards",
+        "Each scheme card shows scheme name and brief description",
+        "Clicking a scheme navigates to a dedicated detail page",
+        "Detail page shows comprehensive scheme information (eligibility, benefits, application process, contact details)",
+        "Scheme data is stored in backend and dynamically loaded",
+        "Include major schemes like PM Awas Yojana, PM Kisan, Ayushman Bharat, etc."
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "text": "Add footer section with Panchayat office address, contact number, government disclaimer, and links to Privacy Policy, Terms of Service, and About Smart Grama pages",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Footer with: Panchayat office address, Contact number, Government disclaimer",
+          "Privacy policy page",
+          "Terms page",
+          "About Smart Grama section"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Footer displays on all pages",
+        "Footer includes Panchayat office address",
+        "Footer includes contact phone number",
+        "Footer includes government disclaimer text",
+        "Footer links to Privacy Policy page",
+        "Footer links to Terms of Service page",
+        "Footer links to About Smart Grama page",
+        "All linked pages have appropriate content"
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "text": "Implement backend data models for Users (with name, email, password, role), Complaints (with userId, category, description, photo, audio, location, status, assignedWorker, completionProof, rating), Trees (with userId, type, location, plantedDate, survivalStatus), SolarApplications (with userId, aadhaarDoc, billDoc, housePhoto, status), and WaterProjects (with userId, landPhoto, workerAssigned, completionStatus)",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Users: name, email, password, role (citizen/admin)",
+          "Complaints: userId, category, description, photo, audio, location { lat, lng }, status, assignedWorker, completionProof, rating",
+          "Trees: userId, type, location, plantedDate, survivalStatus",
+          "SolarApplications: userId, aadhaarDoc, billDoc, housePhoto, status",
+          "WaterProjects: userId, landPhoto, workerAssigned, completionStatus"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User model stores name, email, hashed password, and role",
+        "Complaint model includes all specified fields with proper data types",
+        "Location field stores latitude and longitude",
+        "Tree model tracks plantation details and survival status",
+        "SolarApplication model stores document references and status",
+        "WaterProject model tracks worker assignment and completion",
+        "All models have proper relationships (userId references User)",
+        "Models support CRUD operations through API endpoints"
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must use only Motoko (not Node.js, Express, MongoDB, or Firebase)",
+    "Frontend must use React with TypeScript and Tailwind CSS",
+    "No external databases (PostgreSQL, MongoDB, Firebase) - use Internet Computer's stable memory",
+    "No third-party authentication services (Auth0, Firebase Auth) - implement custom JWT or use Internet Identity",
+    "No WebSocket/Socket.io for real-time features - use Internet Computer's update calls",
+    "No external cloud storage (Cloudinary, Firebase Storage) - store files on-chain or use Internet Computer storage",
+    "Google Maps API integration is not directly supported - use alternative mapping solutions or static map generation",
+    "Audio upload features may need to be adapted for on-chain storage constraints"
+  ],
+  "nonGoals": [
+    "AI features for auto-categorization, priority detection, or survival risk prediction",
+    "Real-time notifications using Socket.io",
+    "Dark mode implementation",
+    "Government circular announcements section",
+    "Reward system for active citizens",
+    "PDF export functionality",
+    "District-level scaling architecture",
+    "Forgot password feature",
+    "Deployment to Vercel, Netlify, Render, or Railway",
+    "MongoDB Atlas or Firebase Firestore integration",
+    "Cloudinary or Firebase Storage integration",
+    "Animated charts with Framer Motion"
+  ],
+  "imageRequirements": {
+    "required": [
+      "India emblem style logo for government header with tricolor elements (india-emblem.dim_200x200.png)",
+      "Hero banner image showing rural village with panchayat office and sustainable development elements like trees, solar panels, and water harvesting (hero-banner.dim_1200x400.png)",
+      "Illustration of citizen submitting complaint on mobile phone with location pin (complaint-illustration.dim_400x300.png)",
+      "Tree plantation icon showing sapling being planted in soil (tree-icon.dim_150x150.png)",
+      "Rainwater harvesting illustration showing water collection system (rainwater-icon.dim_150x150.png)",
+      "Solar panel installation icon with house and solar panels on roof (solar-icon.dim_150x150.png)",
+      "Admin dashboard illustration showing charts and analytics (admin-dashboard.dim_400x300.png)",
+      "Map marker icons in three colors: red pin for complaints, green pin for trees, yellow pin for solar homes (markers-set.dim_90x120.png)"
+    ],
+    "edits": []
+  }
+}

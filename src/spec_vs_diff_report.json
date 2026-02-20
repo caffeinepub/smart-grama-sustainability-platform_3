@@ -1,0 +1,151 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-20T13:44:58.983Z",
+  "summary": "The implementation covers most core requirements for the Smart Grama platform, including authentication, complaint management, tree plantation, water harvesting, solar scheme modules, admin analytics dashboard with charts, status tracking, and UI components. However, several requirements are either missing or not fully implemented based on the available diff evidence.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "JWT-based session management with role-based access control",
+      "reason": "The backend uses Internet Identity (Principal-based authentication) instead of JWT tokens as specified. No JWT token generation or validation is evident in the backend code.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-1",
+      "requirement": "Password hashing for secure storage",
+      "reason": "No password field or password hashing mechanism is present in the User Profile type. The system uses Internet Identity instead of traditional email/password authentication.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Audio upload for complaints",
+      "reason": "While the Complaint type includes an optional audio field in the backend model, there is no evidence of audio upload UI implementation in the frontend complaint forms shown in the diff.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Admin can approve or reject tree plantation requests",
+      "reason": "The Tree model lacks an approval status field (e.g., pending/approved/rejected). Only survivalStatus (Bool) is tracked.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Record water capacity measurement for rainwater harvesting projects",
+      "reason": "The WaterProject model does not include a field for water capacity measurement. Only workerAssigned and completionStatus are present.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Display groundwater impact analytics on dashboard",
+      "reason": "No groundwater impact metrics or analytics are present in the admin dashboard components. MetricsCards only shows count of water projects.",
+      "evidence": [
+        "frontend/src/components/admin/MetricsCards.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Record energy generation data and display energy generation metrics",
+      "reason": "The SolarApplication model lacks fields for energy generation data. Only document references and status are stored.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Calculate and display CO₂ reduction estimates",
+      "reason": "No CO₂ reduction calculation or display logic is found in admin dashboard or solar management components.",
+      "evidence": [
+        "frontend/src/components/admin/MetricsCards.tsx"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Google Maps integration with markers and popup details",
+      "reason": "No map component implementation is visible in the diff. The admin dashboard includes map placeholder references but no actual map rendering code is shown.",
+      "evidence": []
+    },
+    {
+      "id": "REQ-15",
+      "requirement": "Government Schemes Information Page with scheme cards and detail pages",
+      "reason": "While routing includes /schemes and /schemes/$schemeId paths, the actual SchemesPage and SchemeDetailPage components are not present in the diff.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-17",
+      "requirement": "User model with email field",
+      "reason": "The UserProfile type only includes name, mobile (optional), and role. No email field is present, which conflicts with the requirement specification.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.75,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/ComplaintCard.tsx",
+    "frontend/src/components/ComplaintRatingForm.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LanguageToggle.tsx",
+    "frontend/src/components/Layout.tsx",
+    "frontend/src/components/LoginButton.tsx",
+    "frontend/src/components/Navbar.tsx",
+    "frontend/src/components/ProfileSetupModal.tsx",
+    "frontend/src/components/ProtectedRoute.tsx",
+    "frontend/src/components/SolarApplicationCard.tsx",
+    "frontend/src/components/StatusBadge.tsx",
+    "frontend/src/components/TreeRequestCard.tsx",
+    "frontend/src/components/WaterProjectCard.tsx",
+    "frontend/src/components/admin/ComplaintsBarChart.tsx",
+    "frontend/src/components/admin/MetricsCards.tsx",
+    "frontend/src/components/admin/MonthlyActivityChart.tsx",
+    "frontend/src/components/admin/RecentActivityFeed.tsx",
+    "frontend/src/components/admin/StatusPieChart.tsx",
+    "frontend/src/contexts/LanguageContext.tsx",
+    "frontend/src/data/schemes.ts",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/hooks/useUserProfile.ts",
+    "frontend/src/hooks/useUserRole.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/AboutPage.tsx",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/MyRequestsPage.tsx",
+    "frontend/src/pages/PrivacyPolicyPage.tsx",
+    "frontend/src/pages/ReportIssuePage.tsx",
+    "frontend/src/pages/SchemeDetailPage.tsx",
+    "frontend/src/pages/SchemesPage.tsx",
+    "frontend/src/pages/SolarSchemePage.tsx",
+    "frontend/src/pages/TermsPage.tsx",
+    "frontend/src/pages/TreePlantationPage.tsx",
+    "frontend/src/pages/WaterHarvestingPage.tsx",
+    "frontend/src/pages/admin/ComplaintsManagementPage.tsx",
+    "frontend/src/pages/admin/DashboardPage.tsx",
+    "frontend/src/pages/admin/SolarManagementPage.tsx",
+    "frontend/src/pages/admin/TreeManagementPage.tsx",
+    "frontend/src/pages/admin/WaterProjectsManagementPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}
